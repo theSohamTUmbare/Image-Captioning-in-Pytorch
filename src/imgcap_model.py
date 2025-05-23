@@ -49,3 +49,4 @@ class ImageCaptioningModel(nn.Module):
         output = self.fc(last_lstm_out)  # (batch_size * N, vocab_size)
 
         return output.view(B, N, -1)  # Reshape back to (batch_size, N, vocab_size)
+ 

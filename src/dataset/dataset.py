@@ -28,9 +28,25 @@ class Vocabulary:
 
     def caption_to_seq(self, caption):
         return [self.word2idx[word] for word in caption.split() if word in self.word2idx]
+    
+    def load_from_dicts(self, w2i_dict, i2w_dict):
+        # w2i_dict is word→index, i2w_dict is index→word (with string keys)
+        self.word2idx = {word: int(idx) for word, idx in w2i_dict.items()}
+        self.idx2word = {int(idx): word for idx, word in i2w_dict.items()}
 
     def seq_to_caption(self, seq):
-        return ' '.join([self.idx2word[idx] for idx in seq if idx in self.idx2word])
+        # Convert a list of indices back to a string, skipping any out‐of‐vocab indices
+        words = []
+        for idx in seq:
+            if idx in self.idx2word:
+                w = self.idx2word[idx]
+                if w == "endseq" : 
+                    break
+                words.append(w)
+        # You’ll likely see “startseq” and “endseq” tokens in front/back—feel free to strip them
+        caption = " ".join(words)
+        caption = caption.replace("startseq", "").replace("endseq", "").strip()
+        return caption
 
 
 class CaptionDataset(Dataset):

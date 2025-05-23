@@ -29,10 +29,4 @@ def generate_caption(image_name):
     plt.show()  
 
 
-def main():
-    image_name = '1002674143_1b742ab4b8.jpg'
-    generate_caption(image_name)
-
-if __name__ == "__main__":
-    main()
 
